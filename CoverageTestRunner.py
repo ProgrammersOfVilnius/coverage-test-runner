@@ -134,7 +134,9 @@ class CoverageTestRunner:
         for module, test_module, suite in module_pairs:
             coverage.erase()
             coverage.start()
+            sys.path.insert(0, os.path.dirname(module.__file__))
             reload(module)
+            del sys.path[0]
             suite.run(result)
             coverage.stop()
             filename, stmts, missed, missed_desc = coverage.analysis(module)

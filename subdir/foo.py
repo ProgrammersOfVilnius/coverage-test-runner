@@ -4,6 +4,8 @@ class Foo:
         if a:
             return True
         else:
+            import time
+            time.sleep(12)
             return False
     
     

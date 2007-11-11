@@ -75,12 +75,35 @@ class CoverageTestRunner:
     def add_pair(self, module_pathname, test_module_pathname):
         """Add a module and its test module to list of tests."""
         self._module_pairs.append((module_pathname, test_module_pathname))
+
+    def find_pairs(self, dirname):
+        """Find all module/test module pairs in directory tree.
+        
+        This method relies on a naming convention: it scans a directory
+        tree and assumes that for any file foo.py, if there exists a
+        file foo_tests.py or fooTests.py, they form a pair.
+        
+        """
+        
+        suffixes = ["_tests.py", "Tests.py"]
+        
+        
+        for dirname, dirnames, filenames in os.walk(dirname):
+            tests = []
+            for filename in filenames:
+                for suffix in suffixes:
+                    if filename.endswith(suffix):
+                        module = filename[:-len(suffix)] + ".py"
+                        if module in filenames:
+                            module = os.path.join(dirname, module)
+                            filename = os.path.join(dirname, filename)
+                            self.add_pair(module, filename)
         
     def _load_module_from_pathname(self, pathname):
         for tuple in imp.get_suffixes():
             suffix, mode, type = tuple
             if pathname.endswith(suffix):
-                name = pathname[:-len(suffix)]
+                name = os.path.basename(pathname[:-len(suffix)])
                 f = file(pathname, mode)
                 return imp.load_module(name, f, pathname, tuple)
         raise Exception("Unknown module: %s" % pathname)

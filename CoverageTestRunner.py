@@ -176,3 +176,14 @@ class CoverageTestRunner:
         print "Time: %.1f s" % (end_time - start_time)
 
         return result
+
+
+def run(dirname="."):
+    """Use CoverageTestRunner on the desired directory."""
+    runner = CoverageTestRunner()
+    runner.find_pairs(dirname)
+    runner.run()
+
+
+if __name__ == "__main__":
+    run()

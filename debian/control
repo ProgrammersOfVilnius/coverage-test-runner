@@ -1,0 +1,18 @@
+Source: python-coverage-test-runner
+Maintainer: Lars Wirzenius <liw@iki.fi>
+Section: devel
+Priority: optional
+Standards-Version: 3.7.2
+Build-Depends: cdbs (>= 0.4.43), debhelper (>= 5.0.38), 
+    python-central (>= 0.5.6), python
+XS-Python-Version: all
+
+Package: python-coverage-test-runner
+Architecture: all
+Depends: ${python:Depends}, python-coverage
+XB-Python-Version: ${python:Versions}
+Description: fail Python program unit tests unless they test everything
+ This package contains the Python module CoverageTestRunner, which runs
+ unit tests implemented using the unittest module in the Python standard
+ library. It runs them using the coverage.py (in the python-coverage package)
+ and fails the test if all statements are not covered.

@@ -14,5 +14,5 @@ XB-Python-Version: ${python:Versions}
 Description: fail Python program unit tests unless they test everything
  This package contains the Python module CoverageTestRunner, which runs
  unit tests implemented using the unittest module in the Python standard
- library. It runs them using the coverage.py (in the python-coverage package)
+ library. It runs them using coverage.py (in the python-coverage package)
  and fails the test if all statements are not covered.

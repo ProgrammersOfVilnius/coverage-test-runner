@@ -134,7 +134,9 @@ class CoverageTestRunner:
         for module, test_module, suite in module_pairs:
             coverage.erase()
             coverage.start()
+            sys.path.insert(0, os.path.dirname(module.__file__))
             reload(module)
+            del sys.path[0]
             suite.run(result)
             coverage.stop()
             filename, stmts, missed, missed_desc = coverage.analysis(module)
@@ -176,3 +178,14 @@ class CoverageTestRunner:
         print "Time: %.1f s" % (end_time - start_time)
 
         return result
+
+
+def run(dirname="."):
+    """Use CoverageTestRunner on the desired directory."""
+    runner = CoverageTestRunner()
+    runner.find_pairs(dirname)
+    runner.run()
+
+
+if __name__ == "__main__":
+    run()

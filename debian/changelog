@@ -1,5 +1,5 @@
 python-coverage-test-runner (1.0-1) unstable; urgency=low
 
-  * First version.
+  * First public version.
 
- -- Lars Wirzenius <liw@iki.fi>  Fri, 13 Jul 2007 00:33:00 +0300
+ -- Lars Wirzenius <liw@iki.fi>  Sat, 15 Dec 2007 21:59:54 +0200

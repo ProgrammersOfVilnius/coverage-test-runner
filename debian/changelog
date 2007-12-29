@@ -1,3 +1,11 @@
+python-coverage-test-runner (1.0-2) unreleased; urgency=low
+
+  * debian/copyright: Fixed wording to point out explicitly that version
+    two or later of the GPL is the license. Thanks to Joerg Jaspert for
+    pointing it out.
+
+ -- Lars Wirzenius <liw@iki.fi>  Sun, 30 Dec 2007 00:15:57 +0200
+
 python-coverage-test-runner (1.0-1) unstable; urgency=low
 
   * First public version. (Closes: #456443)

@@ -4,8 +4,8 @@ python-coverage-test-runner was originally written and packaged as a
 It was downloaded from http://braawi.org/coveragetestrunner.html
 
 python-coverage-test-runner is licensed under the GNU General Public
-License, or any later version. On Debian systems, you can find version 2
-of the license at /usr/share/common-licenses/GPL-2 .
+License, either version 2 or any later version. On Debian systems, you
+can find version 2 of the license at /usr/share/common-licenses/GPL-2 .
 
 # Copyright (C) 2007  Lars Wirzenius <liw@iki.fi>
 #

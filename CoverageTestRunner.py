@@ -184,7 +184,9 @@ def run(dirname="."):
     """Use CoverageTestRunner on the desired directory."""
     runner = CoverageTestRunner()
     runner.find_pairs(dirname)
-    runner.run()
+    result = runner.run()
+    if not result.wasSuccessful():
+        sys.exit(1)
 
 
 if __name__ == "__main__":

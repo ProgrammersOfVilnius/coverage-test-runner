@@ -17,6 +17,7 @@
 
 import coverage
 import unittest
+import optparse
 import os
 import imp
 import sys
@@ -38,9 +39,9 @@ class CoverageTestResult(unittest.TestResult):
         self.coverage_missed.append((filename, statements, missed_statements,
                                      missed_description))
 
-    def wasSuccessful(self):
+    def wasSuccessful(self, ignore_coverage=False):
         return (unittest.TestResult.wasSuccessful(self) and 
-                not self.coverage_missed)
+                (ignore_coverage or not self.coverage_missed))
         
     def clearmsg(self):
         self.output.write("\b \b" * len(self.lastmsg))
@@ -182,10 +183,18 @@ class CoverageTestRunner:
 
 def run(dirname="."):
     """Use CoverageTestRunner on the desired directory."""
+
+    parser = optparse.OptionParser()
+    parser.add_option("--ignore-coverage", action="store_true",
+                      help="Don't fail tests even if coverage is "
+                           "incomplete.")
+
+    opts, args = parser.parse_args()
+
     runner = CoverageTestRunner()
     runner.find_pairs(dirname)
     result = runner.run()
-    if not result.wasSuccessful():
+    if not result.wasSuccessful(ignore_coverage=opts.ignore_coverage):
         sys.exit(1)
 
 

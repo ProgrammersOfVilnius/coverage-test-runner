@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name='CoverageTestRunner',
-      version='1.0',
+      version='1.1',
       description='fail Python program unit tests unless they test everything',
       long_description='''\
 CoverageTestRunner runs unit tests implemented using the unittest module

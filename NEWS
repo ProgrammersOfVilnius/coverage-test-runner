@@ -1,0 +1,7 @@
+NEWS about CoverageTestRunner
+=============================
+
+Version 1.1, released 2008-05-18
+--------------------------------
+
+Added support for '#pragma: no cover'.

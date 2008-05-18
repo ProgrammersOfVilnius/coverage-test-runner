@@ -87,6 +87,25 @@ executed during the tests, a list of files and statement numbers is
 included in the output.
 
 
+Excluding some statements from the coverage analysis
+====================================================
+
+Use "# pragma: no cover" to exclude some statements from being included
+in the coverage analysis. The line with that comment is excluded. If
+the line is an if, while, def, or similar, with a "body", the body
+is also excluded. For example:
+
+    if always_true_during_testing:
+        print foo
+    else: # pragma: no cover
+        print bar
+        
+The last two lines of codes are excluded from coverage analysis even
+if the test suite does not execute them.
+
+You should only use this after thorough consideration.
+
+
 Your tests are too slow
 =======================
 

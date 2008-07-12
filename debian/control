@@ -1,6 +1,6 @@
 Source: python-coverage-test-runner
-Maintainer: Lars Wirzenius <liw@iki.fi>
-Section: devel
+Maintainer: Lars Wirzenius <liw@liw.fi>
+Section: python
 Priority: optional
 Standards-Version: 3.7.2
 Build-Depends: cdbs (>= 0.4.43), debhelper (>= 5.0.38), 

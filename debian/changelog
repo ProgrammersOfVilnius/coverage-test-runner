@@ -4,6 +4,7 @@ python-coverage-test-runner (1.1-1) unstable; urgency=low
   * debian/control: Change Section: to python to match the Debian override
     file.
   * debian/control: Update Maintainer: to use my current e-mail address.
+  * debian/control: Bump Standards-Version. No other changes required.
 
  -- Lars Wirzenius <liw@liw.fi>  Sat, 12 Jul 2008 16:16:11 +0300
 

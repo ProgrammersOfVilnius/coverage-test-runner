@@ -71,6 +71,7 @@ class CoverageTestRunner:
     """A test runner class that insists modules' tests cover them fully."""
     
     def __init__(self):
+        self._dirname = None
         self._module_pairs = []
         
     def add_pair(self, module_pathname, test_module_pathname):
@@ -87,7 +88,10 @@ class CoverageTestRunner:
         """
         
         suffixes = ["_tests.py", "Tests.py"]
-        
+
+        self._dirname = os.path.abspath(dirname)
+        if not self._dirname.endswith(os.sep):
+            self._dirname += os.sep
         
         for dirname, dirnames, filenames in os.walk(dirname):
             tests = []
@@ -143,6 +147,8 @@ class CoverageTestRunner:
             coverage.stop()
             filename, stmts, missed, missed_desc = coverage.analysis(module)
             if missed:
+                if self._dirname and filename.startswith(self._dirname):
+                    filename = filename[len(self._dirname):]
                 result.addCoverageMissed(filename, stmts, missed, missed_desc)
 
         end_time = time.time()

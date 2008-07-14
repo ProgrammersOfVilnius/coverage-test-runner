@@ -7,5 +7,3 @@ class Foo:
             import time
             time.sleep(12)
             return False
-    
-    

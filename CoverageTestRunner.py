@@ -32,12 +32,16 @@ class CoverageTestResult(unittest.TestResult):
         self.total = total
         self.lastmsg = ""
         self.coverage_missed = []
+        self.coverage_excluded = []
         self.timings = []
         
     def addCoverageMissed(self, filename, statements, missed_statements,
                           missed_description):
         self.coverage_missed.append((filename, statements, missed_statements,
                                      missed_description))
+
+    def addCoverageExcluded(self, statements):
+        self.coverage_excluded += statements
 
     def wasSuccessful(self, ignore_coverage=False):
         return (unittest.TestResult.wasSuccessful(self) and 
@@ -145,11 +149,15 @@ class CoverageTestRunner:
             del sys.path[0]
             suite.run(result)
             coverage.stop()
-            filename, stmts, missed, missed_desc = coverage.analysis(module)
+            filename, stmts, excluded, missed, missed_desc = \
+                coverage.analysis2(module)
+            if self._dirname and filename.startswith(self._dirname):
+                filename = filename[len(self._dirname):]
             if missed:
-                if self._dirname and filename.startswith(self._dirname):
-                    filename = filename[len(self._dirname):]
                 result.addCoverageMissed(filename, stmts, missed, missed_desc)
+            print "xxxx"
+            print "excluded:", excluded
+            result.addCoverageExcluded(excluded)
 
         end_time = time.time()
 
@@ -176,6 +184,9 @@ class CoverageTestRunner:
 
             print "%d failures, %d errors" % (len(result.failures),
                                               len(result.errors))
+
+        if result.coverage_excluded:
+            print len(result.coverage_excluded), "excluded statements"
 
         if end_time - start_time > 10:
             print

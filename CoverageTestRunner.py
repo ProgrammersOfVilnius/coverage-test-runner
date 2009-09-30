@@ -249,6 +249,8 @@ def run(dirname="."):
         lines = [x.strip() for x in lines]
         lines = [x for x in lines if x and not x.startswith('#')]
         ignored_modules = lines
+    else:
+        ignored_modules = []
 
     runner = CoverageTestRunner()
     runner.find_pairs(dirname, ignored_modules)

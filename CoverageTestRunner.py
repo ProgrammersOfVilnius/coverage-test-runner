@@ -91,7 +91,7 @@ class CoverageTestRunner:
     def add_missing(self, module_pathname):
         self._missing_test_modules.append(module_pathname)
 
-    def find_pairs(self, dirname):
+    def find_pairs(self, dirname, ignored_modules):
         """Find all module/test module pairs in directory tree.
 
         This method relies on a naming convention: it scans a directory
@@ -126,7 +126,9 @@ class CoverageTestRunner:
                     self.add_pair(module, filename)
 
             for filename in nontests:
-                self.add_missing(os.path.join(dirname, filename))
+                filename = os.path.join(dirname, filename)
+                if filename not in ignored_modules:
+                    self.add_missing(filename)
         
     def _load_module_from_pathname(self, pathname):
         for tuple in imp.get_suffixes():
@@ -236,11 +238,20 @@ def run(dirname="."):
     parser.add_option("--ignore-missing", action="store_true",
                       help="Don't fail even if some modules have no test "
                            "module.")
+    parser.add_option("--ignore-missing-from", metavar="FILE", 
+                      help="Ignore missing test modules for modules listed "
+                           "in FILE.")
 
     opts, args = parser.parse_args()
+    
+    if opts.ignore_missing_from:
+        lines = file(opts.ignore_missing_from).readlines()
+        lines = [x.strip() for x in lines]
+        lines = [x for x in lines if x and not x.startswith('#')]
+        ignored_modules = lines
 
     runner = CoverageTestRunner()
-    runner.find_pairs(dirname)
+    runner.find_pairs(dirname, ignored_modules)
     result = runner.run()
     if not result.wasSuccessful(ignore_coverage=opts.ignore_coverage,
                                 ignore_missing=opts.ignore_missing):

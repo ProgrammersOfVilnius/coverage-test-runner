@@ -1,0 +1,23 @@
+python-coverage-test-runner (1.1-1) unstable; urgency=low
+
+  * New upstream version.
+  * debian/control: Change Section: to python to match the Debian override
+    file.
+  * debian/control: Update Maintainer: to use my current e-mail address.
+  * debian/control: Bump Standards-Version. No other changes required.
+
+ -- Lars Wirzenius <liw@liw.fi>  Sat, 12 Jul 2008 16:16:11 +0300
+
+python-coverage-test-runner (1.0-2) unreleased; urgency=low
+
+  * debian/copyright: Fixed wording to point out explicitly that version
+    two or later of the GPL is the license. Thanks to Joerg Jaspert for
+    pointing it out.
+
+ -- Lars Wirzenius <liw@iki.fi>  Sun, 30 Dec 2007 00:15:57 +0200
+
+python-coverage-test-runner (1.0-1) unstable; urgency=low
+
+  * First public version. (Closes: #456443)
+
+ -- Lars Wirzenius <liw@iki.fi>  Sat, 15 Dec 2007 23:05:47 +0200

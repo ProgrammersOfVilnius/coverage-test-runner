@@ -34,6 +34,7 @@ class CoverageTestResult(unittest.TestResult):
         self.coverage_missed = []
         self.coverage_excluded = []
         self.timings = []
+        self.missing_test_modules = []
         
     def addCoverageMissed(self, filename, statements, missed_statements,
                           missed_description):
@@ -43,9 +44,13 @@ class CoverageTestResult(unittest.TestResult):
     def addCoverageExcluded(self, statements):
         self.coverage_excluded += statements
 
-    def wasSuccessful(self, ignore_coverage=False):
+    def addMissingTestModule(self, modulepath):
+        self.missing_test_modules.append(modulepath)
+
+    def wasSuccessful(self, ignore_coverage=False, ignore_missing=False):
         return (unittest.TestResult.wasSuccessful(self) and 
-                (ignore_coverage or not self.coverage_missed))
+                (ignore_coverage or not self.coverage_missed) and
+                (ignore_missing or not self.missing_test_modules))
         
     def clearmsg(self):
         self.output.write("\b \b" * len(self.lastmsg))
@@ -77,14 +82,18 @@ class CoverageTestRunner:
     def __init__(self):
         self._dirname = None
         self._module_pairs = []
+        self._missing_test_modules = []
         
     def add_pair(self, module_pathname, test_module_pathname):
         """Add a module and its test module to list of tests."""
         self._module_pairs.append((module_pathname, test_module_pathname))
 
+    def add_missing(self, module_pathname):
+        self._missing_test_modules.append(module_pathname)
+
     def find_pairs(self, dirname):
         """Find all module/test module pairs in directory tree.
-        
+
         This method relies on a naming convention: it scans a directory
         tree and assumes that for any file foo.py, if there exists a
         file foo_tests.py or fooTests.py, they form a pair.
@@ -98,15 +107,26 @@ class CoverageTestRunner:
             self._dirname += os.sep
         
         for dirname, dirnames, filenames in os.walk(dirname):
+            filenames = [x for x in filenames if x.endswith(".py")]
+        
             tests = []
-            for filename in filenames:
-                for suffix in suffixes:
-                    if filename.endswith(suffix):
-                        module = filename[:-len(suffix)] + ".py"
-                        if module in filenames:
-                            module = os.path.join(dirname, module)
-                            filename = os.path.join(dirname, filename)
-                            self.add_pair(module, filename)
+            for suffix in suffixes:
+                tests += [(x, x[:-len(suffix)] + ".py") 
+                          for x in filenames if x.endswith(suffix)]
+
+            nontests = []
+            nontests = [x for x in filenames 
+                        if x not in [a for a, b in tests]]
+        
+            for filename, module in tests:
+                if module in nontests:
+                    nontests.remove(module)
+                    module = os.path.join(dirname, module)
+                    filename = os.path.join(dirname, filename)
+                    self.add_pair(module, filename)
+
+            for filename in nontests:
+                self.add_missing(os.path.join(dirname, filename))
         
     def _load_module_from_pathname(self, pathname):
         for tuple in imp.get_suffixes():
@@ -139,6 +159,9 @@ class CoverageTestRunner:
         total_tests = sum(suite.countTestCases() 
                           for x, y, suite in module_pairs)
         result = CoverageTestResult(sys.stdout, total_tests)
+        
+        for path in self._missing_test_modules:
+            result.addMissingTestModule(path)
 
         for module, test_module, suite in module_pairs:
             coverage.erase()
@@ -155,8 +178,6 @@ class CoverageTestRunner:
                 filename = filename[len(self._dirname):]
             if missed:
                 result.addCoverageMissed(filename, stmts, missed, missed_desc)
-            print "xxxx"
-            print "excluded:", excluded
             result.addCoverageExcluded(excluded)
 
         end_time = time.time()
@@ -173,7 +194,6 @@ class CoverageTestRunner:
             if result.failures:
                 self.printErrorList("FAILURE", result.failures)
             if result.coverage_missed:
-                print
                 print "Statements missed by per-module tests:"
                 width = max(len(x[0]) for x in result.coverage_missed)
                 fmt = "  %-*s   %s"
@@ -181,12 +201,19 @@ class CoverageTestRunner:
                 for filename, _, _, desc in sorted(result.coverage_missed):
                     print fmt % (width, filename, desc)
                 print
+            if result.missing_test_modules:
+                print "Modules missing test modules:"
+                for pathname in result.missing_test_modules:
+                    print "  %s" % pathname
+                print
 
             print "%d failures, %d errors" % (len(result.failures),
                                               len(result.errors))
 
         if result.coverage_excluded:
             print len(result.coverage_excluded), "excluded statements"
+        if result.missing_test_modules:
+            print len(result.missing_test_modules), "missing test modules"
 
         if end_time - start_time > 10:
             print
@@ -206,13 +233,17 @@ def run(dirname="."):
     parser.add_option("--ignore-coverage", action="store_true",
                       help="Don't fail tests even if coverage is "
                            "incomplete.")
+    parser.add_option("--ignore-missing", action="store_true",
+                      help="Don't fail even if some modules have no test "
+                           "module.")
 
     opts, args = parser.parse_args()
 
     runner = CoverageTestRunner()
     runner.find_pairs(dirname)
     result = runner.run()
-    if not result.wasSuccessful(ignore_coverage=opts.ignore_coverage):
+    if not result.wasSuccessful(ignore_coverage=opts.ignore_coverage,
+                                ignore_missing=opts.ignore_missing):
         sys.exit(1)
 
 

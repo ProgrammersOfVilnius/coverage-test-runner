@@ -1,6 +1,20 @@
 NEWS about CoverageTestRunner
 =============================
 
+Version 1.2, released 2009-11-18
+--------------------------------
+
+* Filenames are no longer prefixed by path to current directory.
+
+* Number of excluded statements is reported.
+
+* Modules without test modules are reported.
+
+* .deb packaging included in upstream source.
+
+* Option --ignore-missing-from added.
+
+
 Version 1.1, released 2008-05-18
 --------------------------------
 

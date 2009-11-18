@@ -1,9 +1,9 @@
 #!/usr/bin/make -f
 
-DEB_PYTHON_SYSTEM=pycentral
+%:
+	dh $@ --build-system=python-distutils
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/python-distutils.mk
-
-clean::
+override_dh_auto_clean:
 	$(MAKE) clean
+	rm -f python-build-stamp-*
+

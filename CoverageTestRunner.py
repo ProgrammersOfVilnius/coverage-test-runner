@@ -217,7 +217,8 @@ class CoverageTestRunner:
         if result.missing_test_modules:
             print len(result.missing_test_modules), "missing test modules"
 
-        if end_time - start_time > 10:
+        maxtime = int(os.environ.get('COVERAGE_TEST_RUNNER_MAX_TIME', '10'))
+        if end_time - start_time > maxtime:
             print
             print "Slowest tests:"
             for secs, test in sorted(result.timings)[-10:]:

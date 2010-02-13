@@ -1,3 +1,9 @@
+python-coverage-test-runner (1.3) karmic; urgency=low
+
+  * New upstream version.
+
+ -- Lars Wirzenius <liw@liw.fi>  Sun, 14 Feb 2010 12:23:11 +1300
+
 python-coverage-test-runner (1.2) karmic; urgency=low
 
   * New upstream version.

@@ -1,6 +1,13 @@
 NEWS about CoverageTestRunner
 =============================
 
+Version 1.3, released 2009-11-18
+--------------------------------
+
+* Threshold for when slow test timings are reported is now user settable
+  via the COVERAGE_TEST_RUNNER environment variable.
+
+
 Version 1.2, released 2009-11-18
 --------------------------------
 

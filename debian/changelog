@@ -1,4 +1,4 @@
-python-coverage-test-runner (1.4) karmic; urgency=low
+python-coverage-test-runner (1.4) squeeze; urgency=low
 
   * Build for Debian squeeze.
 

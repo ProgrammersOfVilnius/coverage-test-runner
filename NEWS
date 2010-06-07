@@ -1,6 +1,15 @@
 NEWS about CoverageTestRunner
 =============================
 
+
+Version 1.4.1, released 2010-06-07
+--------------------------------
+
+* Allow use of profiling (via cProfile), by setting 
+  COVERAGE_TEST_RUNNER_PROFILE environment variable. This will let you
+  find out why the test suite is slow.
+
+
 Version 1.3, released 2009-11-18
 --------------------------------
 

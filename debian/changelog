@@ -1,6 +1,6 @@
-python-coverage-test-runner (1.4) squeeze; urgency=low
+python-coverage-test-runner (1.4.1) squeeze; urgency=low
 
-  * Build for Debian squeeze.
+  * New upstream version.
 
  -- Lars Wirzenius <liw@liw.fi>  Mon, 05 Apr 2010 15:52:00 +1200
 

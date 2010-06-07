@@ -262,4 +262,9 @@ def run(dirname="."):
 
 
 if __name__ == "__main__":
-    run()
+    profname = os.environ.get('COVERAGE_TEST_RUNNER_PROFILE', None)
+    if profname is None:
+        run()
+    else:
+        import cProfile
+        cProfile.run('run()', profname)

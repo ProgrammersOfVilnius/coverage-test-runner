@@ -83,6 +83,7 @@ class CoverageTestRunner:
         self._dirname = None
         self._module_pairs = []
         self._missing_test_modules = []
+        self._excluded_modules = []
         
     def add_pair(self, module_pathname, test_module_pathname):
         """Add a module and its test module to list of tests."""
@@ -90,6 +91,9 @@ class CoverageTestRunner:
 
     def add_missing(self, module_pathname):
         self._missing_test_modules.append(module_pathname)
+
+    def add_excluded_module(self, module_pathname):
+        self._excluded_modules.append(module_pathname)
 
     def find_pairs(self, dirname, ignored_modules):
         """Find all module/test module pairs in directory tree.
@@ -129,6 +133,8 @@ class CoverageTestRunner:
                 filename = os.path.join(dirname, filename)
                 if filename not in ignored_modules:
                     self.add_missing(filename)
+                else:
+                    self.add_excluded_module(filename)
         
     def _load_module_from_pathname(self, pathname):
         for tuple in imp.get_suffixes():
@@ -214,6 +220,8 @@ class CoverageTestRunner:
 
         if result.coverage_excluded:
             print len(result.coverage_excluded), "excluded statements"
+        if self._excluded_modules:
+            print len(self._excluded_modules), "excluded modules"
         if result.missing_test_modules:
             print len(result.missing_test_modules), "missing test modules"
 

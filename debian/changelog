@@ -1,3 +1,9 @@
+python-coverage-test-runner (1.5) squeeze; urgency=low
+
+  * New upstream release
+
+ -- Lars Wirzenius <liw@liw.fi>  Fri, 18 Feb 2011 22:33:20 +0000
+
 python-coverage-test-runner (1.4.1) squeeze; urgency=low
 
   * New upstream version.

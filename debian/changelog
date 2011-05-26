@@ -1,3 +1,9 @@
+python-coverage-test-runner (1.6) UNRELEASED; urgency=low
+
+  * Re-uploaded to Debian. (Closes: #628016) 
+
+ -- Lars Wirzenius <liw@liw.fi>  Thu, 26 May 2011 13:47:06 +0100
+
 python-coverage-test-runner (1.5) squeeze; urgency=low
 
   * New upstream release

@@ -38,7 +38,7 @@ setup(name='CoverageTestRunner',
         'Topic :: Software Development',
         'Topic :: Software Development :: Quality Assurance',
         'Topic :: Software Development :: Testing',
-      ]
+      ],
       py_modules=['CoverageTestRunner'],
      )
 

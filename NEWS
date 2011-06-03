@@ -2,6 +2,14 @@ NEWS about CoverageTestRunner
 =============================
 
 
+Version 1.6, released 2011-06-03
+--------------------------------
+
+* License change to GPL version 3 or later.
+* Debian packaging updated for upload to Debian.
+* `README` markup fixes and other minor updates.
+* `setup.py` fixed up so it is suitable for PyPI use.
+
 Version 1.5, released 2011-02-18
 --------------------------------
 

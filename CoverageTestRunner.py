@@ -22,6 +22,9 @@ import sys
 import time
 
 
+__version__ = '1.5'
+
+
 class CoverageTestResult(unittest.TestResult):
 
     def __init__(self, output, total):

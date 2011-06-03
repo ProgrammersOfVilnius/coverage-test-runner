@@ -1,6 +1,17 @@
 python-coverage-test-runner (1.6-1) unstable; urgency=low
 
+  * New upstream version.
+    - license change to GPL3+
+    - tweaks to documentation (README)
   * Re-uploaded to Debian. (Closes: #628016) 
+  * debian/copyright: Updated to reflect reality (GPL3+, not GPL2+),
+    and converted to DEP5.
+  * debian/control:
+    - Standards-Version bumped to 3.9.2 (no other changes required).
+    - Add python-coverage to Build-Depends.
+    - Add X-Python-Version header.
+    - Add Homepage.
+  * debian/source/format: Use 3.0 (quilt).
 
  -- Lars Wirzenius <liw@liw.fi>  Thu, 26 May 2011 13:47:06 +0100
 

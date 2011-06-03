@@ -1,4 +1,4 @@
-python-coverage-test-runner (1.6) UNRELEASED; urgency=low
+python-coverage-test-runner (1.6-1) unstable; urgency=low
 
   * Re-uploaded to Debian. (Closes: #628016) 
 

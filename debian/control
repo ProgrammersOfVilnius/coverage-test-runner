@@ -10,6 +10,7 @@ X-Python-Version: >= 2.6
 Package: python-coverage-test-runner
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}, python-coverage
+Homepage: http://liw.fi/coverage-test-runner/
 Description: fail Python program unit tests unless they test everything
  This package contains the Python module CoverageTestRunner, which runs
  unit tests implemented using the unittest module in the Python standard

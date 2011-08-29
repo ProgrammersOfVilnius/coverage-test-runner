@@ -1,6 +1,15 @@
 NEWS about CoverageTestRunner
 =============================
 
+Version 1.7, released UNRELEASED
+--------------------------------
+
+* When running "python -m CoverageTestRunner", user may now specify a list
+  of directories to scan for tests, rather than always scanning the current
+  working directory.
+* Pathnames in the file specified with `--ignore-missing-from=FILE` are
+  now normalized, so that the user does not need to specify `./setup.py`
+  and can say `setup.py` instead.
 
 Version 1.6, released 2011-06-03
 --------------------------------

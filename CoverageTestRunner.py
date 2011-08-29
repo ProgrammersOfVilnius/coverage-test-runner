@@ -260,6 +260,7 @@ def run():
         lines = file(opts.ignore_missing_from).readlines()
         lines = [x.strip() for x in lines]
         lines = [x for x in lines if x and not x.startswith('#')]
+        lines = [os.path.normpath(x) for x in lines]
         ignored_modules = lines
     else:
         ignored_modules = ['./setup.py']

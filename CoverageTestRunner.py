@@ -238,7 +238,7 @@ class CoverageTestRunner:
         return result
 
 
-def run(dirname="."):
+def run():
     """Use CoverageTestRunner on the desired directory."""
 
     parser = optparse.OptionParser()
@@ -252,7 +252,10 @@ def run(dirname="."):
                       help="Ignore missing test modules for modules listed "
                            "in FILE.")
 
-    opts, args = parser.parse_args()
+    opts, dirnames = parser.parse_args()
+    if not dirnames:
+        dirnames = ['.']
+    dirname = dirnames[0]
     
     if opts.ignore_missing_from:
         lines = file(opts.ignore_missing_from).readlines()

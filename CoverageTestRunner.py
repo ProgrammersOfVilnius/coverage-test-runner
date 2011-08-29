@@ -255,7 +255,6 @@ def run():
     opts, dirnames = parser.parse_args()
     if not dirnames:
         dirnames = ['.']
-    dirname = dirnames[0]
     
     if opts.ignore_missing_from:
         lines = file(opts.ignore_missing_from).readlines()
@@ -266,7 +265,8 @@ def run():
         ignored_modules = ['./setup.py']
 
     runner = CoverageTestRunner()
-    runner.find_pairs(dirname, ignored_modules)
+    for dirname in dirnames:
+        runner.find_pairs(dirname, ignored_modules)
     result = runner.run()
     if not result.wasSuccessful(ignore_coverage=opts.ignore_coverage,
                                 ignore_missing=opts.ignore_missing):

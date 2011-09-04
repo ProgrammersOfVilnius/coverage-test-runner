@@ -1,7 +1,7 @@
 NEWS about CoverageTestRunner
 =============================
 
-Version 1.7, released UNRELEASED
+Version 1.7, released 2011-09-04
 --------------------------------
 
 * When running "python -m CoverageTestRunner", user may now specify a list

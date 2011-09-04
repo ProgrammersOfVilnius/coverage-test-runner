@@ -22,7 +22,7 @@ import sys
 import time
 
 
-__version__ = '1.7'
+__version__ = '1.7.1'
 
 
 class CoverageTestResult(unittest.TestResult):
@@ -131,7 +131,7 @@ class CoverageTestRunner:
                     self.add_pair(module, filename)
 
             for filename in nontests:
-                filename = os.path.join(dirname, filename)
+                filename = os.path.normpath(os.path.join(dirname, filename))
                 if filename not in ignored_modules:
                     self.add_missing(filename)
                 else:
@@ -263,7 +263,7 @@ def run():
         lines = [os.path.normpath(x) for x in lines]
         ignored_modules = lines
     else:
-        ignored_modules = ['./setup.py']
+        ignored_modules = ['setup.py']
 
     runner = CoverageTestRunner()
     for dirname in dirnames:

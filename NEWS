@@ -1,6 +1,12 @@
 NEWS about CoverageTestRunner
 =============================
 
+Version 1.8, released UNRELEASED
+--------------------------------
+
+* Progress reporting is now disabled when output does not go to a terminal.
+  This will make build logs prettier.
+
 Version 1.7.1, released 2011-09-04
 --------------------------------
 

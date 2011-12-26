@@ -52,9 +52,14 @@ class CoverageTestResult(unittest.TestResult):
         return (unittest.TestResult.wasSuccessful(self) and 
                 (ignore_coverage or not self.coverage_missed) and
                 (ignore_missing or not self.missing_test_modules))
+
+    def _ttywrite(self, string):
+        if self.output.isatty():
+            self.output.write(string)
+            self.output.flush()
         
     def clearmsg(self):
-        self.output.write("\b \b" * len(self.lastmsg))
+        self._ttywrite("\b \b" * len(self.lastmsg))
         self.lastmsg = ""
         
     def write(self, test):
@@ -62,8 +67,7 @@ class CoverageTestResult(unittest.TestResult):
         self.lastmsg = "Running test %d/%d: %s" % (self.testsRun, 
                                                    self.total, 
                                                    str(test)[:50])
-        self.output.write(self.lastmsg)
-        self.output.flush()
+        self._ttywrite(self.lastmsg)
         
     def startTest(self, test):
         unittest.TestResult.startTest(self, test)

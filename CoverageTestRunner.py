@@ -20,9 +20,19 @@ import os
 import imp
 import sys
 import time
+import logging
 
 
-__version__ = '1.7.1'
+__version__ = '1.8'
+
+
+
+class AllowNothing(logging.Filter):
+
+    '''A logging library filter that disables everything.'''
+    
+    def filter(self, record):
+        return False
 
 
 class CoverageTestResult(unittest.TestResult):
@@ -89,7 +99,8 @@ class CoverageTestRunner:
         self._module_pairs = []
         self._missing_test_modules = []
         self._excluded_modules = []
-        
+        self.allow_nothing = AllowNothing()
+
     def add_pair(self, module_pathname, test_module_pathname):
         """Add a module and its test module to list of tests."""
         self._module_pairs.append((module_pathname, test_module_pathname))
@@ -165,6 +176,14 @@ class CoverageTestRunner:
             print "%s: %s" % (flavor, str(test))
             print str(error)
 
+    def enable_logging(self):
+        logger = logging.getLogger()
+        logger.removeFilter(self.allow_nothing)
+
+    def disable_logging(self):
+        logger = logging.getLogger()
+        logger.addFilter(self.allow_nothing)
+
     def run(self):
         start_time = time.time()
         
@@ -183,7 +202,9 @@ class CoverageTestRunner:
             sys.path.insert(0, os.path.dirname(module.__file__))
             reload(module)
             del sys.path[0]
+            self.disable_logging()
             suite.run(result)
+            self.enable_logging()
             coverage.stop()
             filename, stmts, excluded, missed, missed_desc = \
                 coverage.analysis2(module)

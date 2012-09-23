@@ -1,3 +1,9 @@
+python-coverage-test-runner (1.9-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+
+ -- Lars Wirzenius <liw@liw.fi>  Sun, 23 Sep 2012 21:50:19 +0100
+
 python-coverage-test-runner (1.8-1) unstable; urgency=low
 
   * New upstream release.

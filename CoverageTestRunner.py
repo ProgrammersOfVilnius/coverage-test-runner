@@ -25,7 +25,7 @@ import time
 import logging
 
 
-__version__ = '1.9'
+__version__ = '1.9.1'
 
 
 

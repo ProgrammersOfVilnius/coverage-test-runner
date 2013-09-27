@@ -158,7 +158,7 @@ class CoverageTestRunner:
         for tuple in imp.get_suffixes():
             suffix, mode, type = tuple
             if pathname.endswith(suffix):
-                name = os.path.basename(pathname[:-len(suffix)])
+                name = pathname[:-len(suffix)]
                 f = file(pathname, mode)
                 return imp.load_module(name, f, pathname, tuple)
         raise Exception("Unknown module: %s" % pathname)

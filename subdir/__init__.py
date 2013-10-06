@@ -1,2 +1,0 @@
-import foo
-import modules_with_same_names_but_different_symbols

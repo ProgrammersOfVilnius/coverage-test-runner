@@ -1,2 +1,5 @@
+subdir/__init__.py
 subdir/bar.py
-
+subdir/modules_with_same_names_but_different_symbols/module1/__init__.py
+subdir/modules_with_same_names_but_different_symbols/module2/__init__.py
+subdir/modules_with_same_names_but_different_symbols/__init__.py

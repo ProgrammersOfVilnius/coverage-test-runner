@@ -1,4 +1,6 @@
-import unittest, foo
+import unittest
+
+from subdir import foo
 
 class FooTests(unittest.TestCase):
 

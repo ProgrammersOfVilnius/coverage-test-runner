@@ -1,6 +1,13 @@
 NEWS about CoverageTestRunner
 =============================
 
+Version 1.11, released UNRELEASED
+--------------------------------
+
+* Bug fix from Jannis Pohlmann: Previously, CoverageTestRunner
+  would often (possibly always) treat modules with the same
+  basename as the same module.
+
 Version 1.10, released 2013-04-17
 --------------------------------
 

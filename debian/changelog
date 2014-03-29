@@ -1,3 +1,12 @@
+python-coverage-test-runner (1.11-1) UNRELEASED; urgency=low
+
+  * New upstream version.
+  * debian/control: Move Homepage: to source stanza.
+  * debian/control: Update Standards-Version to 3.9.5. No further
+    changes required.
+
+ -- Lars Wirzenius <liw@liw.fi>  Sat, 29 Mar 2014 12:40:54 +0000
+
 python-coverage-test-runner (1.10-1) unstable; urgency=low
 
   * New upstream release.

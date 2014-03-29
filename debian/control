@@ -1,8 +1,9 @@
 Source: python-coverage-test-runner
 Maintainer: Lars Wirzenius <liw@liw.fi>
+Homepage: http://liw.fi/coverage-test-runner/
 Section: python
 Priority: optional
-Standards-Version: 3.9.2
+Standards-Version: 3.9.5
 Build-Depends: debhelper (>= 7.0.50~), python-all (>= 2.6.6-3~),
     python-coverage
 X-Python-Version: >= 2.6
@@ -10,7 +11,6 @@ X-Python-Version: >= 2.6
 Package: python-coverage-test-runner
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}, python-coverage
-Homepage: http://liw.fi/coverage-test-runner/
 Description: fail Python program unit tests unless they test everything
  This package contains the Python module CoverageTestRunner, which runs
  unit tests implemented using the unittest module in the Python standard

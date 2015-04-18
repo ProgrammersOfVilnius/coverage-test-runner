@@ -4,12 +4,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
@@ -28,11 +28,10 @@ import logging
 __version__ = '1.10'
 
 
-
 class AllowNothing(logging.Filter):
 
     '''A logging library filter that disables everything.'''
-    
+
     def filter(self, record):
         return False
 
@@ -48,7 +47,7 @@ class CoverageTestResult(unittest.TestResult):
         self.coverage_excluded = []
         self.timings = []
         self.missing_test_modules = []
-        
+
     def addCoverageMissed(self, filename, statements, missed_statements,
                           missed_description):
         self.coverage_missed.append((filename, statements, missed_statements,
@@ -61,7 +60,7 @@ class CoverageTestResult(unittest.TestResult):
         self.missing_test_modules.append(modulepath)
 
     def wasSuccessful(self, ignore_coverage=False, ignore_missing=False):
-        return (unittest.TestResult.wasSuccessful(self) and 
+        return (unittest.TestResult.wasSuccessful(self) and
                 (ignore_coverage or not self.coverage_missed) and
                 (ignore_missing or not self.missing_test_modules))
 
@@ -69,23 +68,23 @@ class CoverageTestResult(unittest.TestResult):
         if self.output.isatty():
             self.output.write(string)
             self.output.flush()
-        
+
     def clearmsg(self):
         self._ttywrite("\b \b" * len(self.lastmsg))
         self.lastmsg = ""
-        
+
     def write(self, test):
         self.clearmsg()
-        self.lastmsg = "Running test %d/%d: %s" % (self.testsRun, 
-                                                   self.total, 
+        self.lastmsg = "Running test %d/%d: %s" % (self.testsRun,
+                                                   self.total,
                                                    str(test)[:50])
         self._ttywrite(self.lastmsg)
-        
+
     def startTest(self, test):
         unittest.TestResult.startTest(self, test)
         self.write(test)
         self.start_time = time.time()
-        
+
     def stopTest(self, test):
         end_time = time.time()
         unittest.TestResult.stopTest(self, test)
@@ -95,7 +94,7 @@ class CoverageTestResult(unittest.TestResult):
 class CoverageTestRunner:
 
     """A test runner class that insists modules' tests cover them fully."""
-    
+
     def __init__(self):
         self._dirname = None
         self._module_pairs = []
@@ -119,27 +118,27 @@ class CoverageTestRunner:
         This method relies on a naming convention: it scans a directory
         tree and assumes that for any file foo.py, if there exists a
         file foo_tests.py or fooTests.py, they form a pair.
-        
+
         """
-        
+
         suffixes = ["_tests.py", "Tests.py"]
 
         self._dirname = os.path.abspath(dirname)
         if not self._dirname.endswith(os.sep):
             self._dirname += os.sep
-        
+
         for dirname, dirnames, filenames in os.walk(dirname):
             filenames = [x for x in filenames if x.endswith(".py")]
-        
+
             tests = []
             for suffix in suffixes:
-                tests += [(x, x[:-len(suffix)] + ".py") 
+                tests += [(x, x[:-len(suffix)] + ".py")
                           for x in filenames if x.endswith(suffix)]
 
             nontests = []
-            nontests = [x for x in filenames 
+            nontests = [x for x in filenames
                         if x not in [a for a, b in tests]]
-        
+
             for filename, module in tests:
                 if module in nontests:
                     nontests.remove(module)
@@ -153,7 +152,7 @@ class CoverageTestRunner:
                     self.add_missing(filename)
                 else:
                     self.add_excluded_module(filename)
-        
+
     def _load_module_from_pathname(self, pathname):
         for tuple in imp.get_suffixes():
             suffix, mode, type = tuple
@@ -188,12 +187,12 @@ class CoverageTestRunner:
 
     def run(self):
         start_time = time.time()
-        
+
         module_pairs = self._load_pairs()
-        total_tests = sum(suite.countTestCases() 
+        total_tests = sum(suite.countTestCases()
                           for x, y, suite in module_pairs)
         result = CoverageTestResult(sys.stdout, total_tests)
-        
+
         for path in self._missing_test_modules:
             result.addMissingTestModule(path)
 
@@ -219,7 +218,7 @@ class CoverageTestRunner:
         end_time = time.time()
 
         sys.stdout.write("\n\n")
-        
+
         if result.wasSuccessful():
             print "OK"
         else:
@@ -259,7 +258,7 @@ class CoverageTestRunner:
             print "Slowest tests:"
             for secs, test in sorted(result.timings)[-10:]:
                 print "  %5.1f s %s" % (secs, str(test)[:70])
-            
+
         print "Time: %.1f s" % (end_time - start_time)
 
         return result
@@ -275,14 +274,14 @@ def run():
     parser.add_option("--ignore-missing", action="store_true",
                       help="Don't fail even if some modules have no test "
                            "module.")
-    parser.add_option("--ignore-missing-from", metavar="FILE", 
+    parser.add_option("--ignore-missing-from", metavar="FILE",
                       help="Ignore missing test modules for modules listed "
                            "in FILE.")
 
     opts, dirnames = parser.parse_args()
     if not dirnames:
         dirnames = ['.']
-    
+
     if opts.ignore_missing_from:
         lines = file(opts.ignore_missing_from).readlines()
         lines = [x.strip() for x in lines]

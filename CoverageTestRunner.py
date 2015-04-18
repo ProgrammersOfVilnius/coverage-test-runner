@@ -198,7 +198,7 @@ class CoverageTestRunner:
 
         for module, test_module, suite in module_pairs:
             coverage.erase()
-            coverage.exclude("#\s*pragma: no cover")
+            coverage.exclude(r"#\s*pragma: no cover")
             coverage.start()
             sys.path.insert(0, os.path.dirname(module.__file__))
             reload(module)

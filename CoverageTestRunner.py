@@ -196,19 +196,20 @@ class CoverageTestRunner:
         for path in self._missing_test_modules:
             result.addMissingTestModule(path)
 
+        _coverage = coverage.Coverage()
         for module, test_module, suite in module_pairs:
-            coverage.erase()
-            coverage.exclude(r"#\s*pragma: no cover")
-            coverage.start()
+            _coverage.erase()
+            _coverage.exclude(r"#\s*pragma: no cover")
+            _coverage.start()
             sys.path.insert(0, os.path.dirname(module.__file__))
             reload(module)
             del sys.path[0]
             self.disable_logging()
             suite.run(result)
             self.enable_logging()
-            coverage.stop()
+            _coverage.stop()
             filename, stmts, excluded, missed, missed_desc = \
-                coverage.analysis2(module)
+                _coverage.analysis2(module)
             if self._dirname and filename.startswith(self._dirname):
                 filename = filename[len(self._dirname):]
             if missed:

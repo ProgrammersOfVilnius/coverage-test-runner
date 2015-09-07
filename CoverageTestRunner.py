@@ -196,7 +196,12 @@ class CoverageTestRunner:
         for path in self._missing_test_modules:
             result.addMissingTestModule(path)
 
-        _coverage = coverage.Coverage()
+        # coverage.Coverage is a coverage.py 4.x feature.
+        if hasattr(coverage, 'Coverage'):
+            _coverage = coverage.Coverage()
+        else:
+            _coverage = coverage
+
         for module, test_module, suite in module_pairs:
             _coverage.erase()
             _coverage.exclude(r"#\s*pragma: no cover")

@@ -25,7 +25,7 @@ import time
 import logging
 
 
-__version__ = '1.10'
+__version__ = '1.11'
 
 
 class AllowNothing(logging.Filter):

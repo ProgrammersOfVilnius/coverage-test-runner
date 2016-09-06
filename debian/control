@@ -4,9 +4,9 @@ Homepage: http://liw.fi/coverage-test-runner/
 Section: python
 Priority: optional
 Standards-Version: 3.9.5
-Build-Depends: debhelper (>= 7.0.50~), python-all (>= 2.6.6-3~),
+Build-Depends: debhelper (>= 7.0.50~), python-all (>= 2.7~),
     python-coverage
-X-Python-Version: >= 2.6
+X-Python-Version: >= 2.7
 
 Package: python-coverage-test-runner
 Architecture: all

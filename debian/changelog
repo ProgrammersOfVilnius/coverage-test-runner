@@ -1,4 +1,4 @@
-python-coverage-test-runner (1.11+git-1) UNRELEASED; urgency=low
+python-coverage-test-runner (1.12+git-1) UNRELEASED; urgency=low
 
   * New upstream version.
   * debian/control: Raise Python dependency to 2.7 or later.

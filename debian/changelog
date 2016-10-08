@@ -2,6 +2,8 @@ python-coverage-test-runner (1.12+git-1) UNRELEASED; urgency=low
 
   * New upstream version.
   * debian/control: Raise Python dependency to 2.7 or later.
+  * debian/control: Raise Standards-Version to 3.9.8. No other changes needed.
+  * debian/control: Raise dependency on debhelper to 9 or later.
 
  -- Lars Wirzenius <liw@liw.fi>  Sun, 25 Oct 2015 13:17:24 +0200
 

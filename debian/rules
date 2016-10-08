@@ -5,5 +5,4 @@
 
 override_dh_auto_clean:
 	$(MAKE) clean
-	dh_auto_clean --with=python2 --buildsystem=python_distutils
-
+	dh_auto_clean --buildsystem=python_distutils

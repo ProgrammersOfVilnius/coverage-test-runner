@@ -20,7 +20,7 @@ all:
 clean:
 	rm -f *.py[co] */*.py[co] .coverage
 	rm -rf build
-	
+
 check:
 	./testrun
 	rm -f .coverage

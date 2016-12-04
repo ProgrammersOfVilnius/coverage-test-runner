@@ -158,7 +158,7 @@ class CoverageTestRunner:
             suffix, mode, type = tuple
             if pathname.endswith(suffix):
                 name = os.path.basename(pathname[:-len(suffix)])
-                f = file(pathname, mode)
+                f = open(pathname, mode)
                 return imp.load_module(name, f, pathname, tuple)
         raise Exception("Unknown module: %s" % pathname)
 
@@ -174,8 +174,8 @@ class CoverageTestRunner:
 
     def printErrorList(self, flavor, errors):
         for test, error in errors:
-            print "%s: %s" % (flavor, str(test))
-            print str(error)
+            print("%s: %s" % (flavor, str(test)))
+            print(str(error))
 
     def enable_logging(self):
         logger = logging.getLogger()
@@ -207,7 +207,7 @@ class CoverageTestRunner:
             _coverage.exclude(r"#\s*pragma: no cover")
             _coverage.start()
             sys.path.insert(0, os.path.dirname(module.__file__))
-            reload(module)
+            imp.reload(module)
             del sys.path[0]
             self.disable_logging()
             suite.run(result)
@@ -226,46 +226,46 @@ class CoverageTestRunner:
         sys.stdout.write("\n\n")
 
         if result.wasSuccessful():
-            print "OK"
+            print("OK")
         else:
-            print "FAILED"
-            print
+            print("FAILED")
+            print()
             if result.errors:
                 self.printErrorList("ERROR", result.errors)
             if result.failures:
                 self.printErrorList("FAILURE", result.failures)
             if result.coverage_missed:
-                print "Statements missed by per-module tests:"
+                print ("Statements missed by per-module tests:")
                 width = max(len(x[0]) for x in result.coverage_missed)
                 fmt = "  %-*s   %s"
-                print fmt % (width, "Module", "Missed statements")
+                print(fmt % (width, "Module", "Missed statements"))
                 for filename, _, _, desc in sorted(result.coverage_missed):
-                    print fmt % (width, filename, desc)
-                print
+                    print(fmt % (width, filename, desc))
+                print()
             if result.missing_test_modules:
-                print "Modules missing test modules:"
+                print("Modules missing test modules:")
                 for pathname in result.missing_test_modules:
-                    print "  %s" % pathname
-                print
+                    print("  %s" % pathname)
+                print()
 
-            print "%d failures, %d errors" % (len(result.failures),
-                                              len(result.errors))
+            print("%d failures, %d errors" % (
+                len(result.failures), len(result.errors)))
 
         if result.coverage_excluded:
-            print len(result.coverage_excluded), "excluded statements"
+            print(len(result.coverage_excluded), "excluded statements")
         if self._excluded_modules:
-            print len(self._excluded_modules), "excluded modules"
+            print(len(self._excluded_modules), "excluded modules")
         if result.missing_test_modules:
-            print len(result.missing_test_modules), "missing test modules"
+            print(len(result.missing_test_modules), "missing test modules")
 
         maxtime = int(os.environ.get('COVERAGE_TEST_RUNNER_MAX_TIME', '10'))
         if end_time - start_time > maxtime:
-            print
-            print "Slowest tests:"
+            print()
+            print("Slowest tests:")
             for secs, test in sorted(result.timings)[-10:]:
-                print "  %5.1f s %s" % (secs, str(test)[:70])
+                print("  %5.1f s %s" % (secs, str(test)[:70]))
 
-        print "Time: %.1f s" % (end_time - start_time)
+        print("Time: %.1f s" % (end_time - start_time))
 
         return result
 
@@ -289,7 +289,7 @@ def run():
         dirnames = ['.']
 
     if opts.ignore_missing_from:
-        lines = file(opts.ignore_missing_from).readlines()
+        lines = open(opts.ignore_missing_from).readlines()
         lines = [x.strip() for x in lines]
         lines = [x for x in lines if x and not x.startswith('#')]
         lines = [os.path.normpath(x) for x in lines]

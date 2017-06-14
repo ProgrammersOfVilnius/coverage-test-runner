@@ -23,6 +23,7 @@ import imp
 import sys
 import time
 import logging
+import operator
 
 
 __version__ = '1.11'
@@ -258,11 +259,12 @@ class CoverageTestRunner:
         if result.missing_test_modules:
             print(len(result.missing_test_modules), "missing test modules")
 
-        maxtime = int(os.environ.get('COVERAGE_TEST_RUNNER_MAX_TIME', '10'))
+        maxtime = float(os.environ.get('COVERAGE_TEST_RUNNER_MAX_TIME', '10'))
         if end_time - start_time > maxtime:
             print()
             print("Slowest tests:")
-            for secs, test in sorted(result.timings)[-10:]:
+            timings = sorted(result.timings, key=operator.itemgetter(0))
+            for secs, test in timings[-10:]:
                 print("  %5.1f s %s" % (secs, str(test)[:70]))
 
         print("Time: %.1f s" % (end_time - start_time))

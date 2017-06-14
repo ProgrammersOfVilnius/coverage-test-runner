@@ -13,4 +13,8 @@ class Foo:
             time.sleep(0)
             return False
 
+    def slow(self, seconds):
+        import time
+        time.sleep(seconds)
+
 foo = Foo()
